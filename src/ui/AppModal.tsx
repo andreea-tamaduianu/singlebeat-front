@@ -1,5 +1,5 @@
 import colors from '@utils/colors';
-import {FC, ReactNode, useEffect} from 'react';
+import {Children, FC, ReactNode, useEffect} from 'react';
 import {View, StyleSheet, Modal, Pressable, Dimensions} from 'react-native';
 import {
   Gesture,
@@ -57,18 +57,21 @@ const AppModal: FC<Props> = ({
 
   useEffect(() => {
     if (visible)
-      translateY.value = withTiming(0, {duration: animation ? 200 : 0});
+      translateY.value = withTiming(0);
   }, [visible, animation]);
 
   return (
     <Modal onRequestClose={handleClose} visible={visible} transparent>
       <GestureHandlerRootView style={{flex: 1}}>
         <Pressable onResponderEnd={handleClose} style={styles.backdrop} />
-        <GestureDetector gesture={gesture}>
-          <Animated.View style={[styles.modal, translateStyle]}>
-            {children}
-          </Animated.View>
-        </GestureDetector>
+        <Animated.View style={[styles.modal, translateStyle]}>
+          <GestureDetector gesture={gesture}>
+            <Animated.View style={styles.handle}>
+            </Animated.View>
+          </GestureDetector>
+          {children}
+        </Animated.View>
+        
       </GestureHandlerRootView>
     </Modal>
   );
@@ -90,6 +93,9 @@ const styles = StyleSheet.create({
     borderTopStartRadius: 10,
     overflow: 'hidden',
   },
+  handle:{
+    width:'100%', height:45, backgroundColor: 'transparent', position:'absolute', top:0, zIndex:1
+  }
 });
 
 export default AppModal;
