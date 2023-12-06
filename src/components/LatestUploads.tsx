@@ -33,7 +33,7 @@ const LatestUploads: FC<Props> = ({onAudioLongPress, onAudioPress}) => {
       </PulseAnimationContainer>
     );
 
-    if(!data?.length) return null;
+  if (!data?.length) return null;
 
   return (
     <View style={styles.container}>

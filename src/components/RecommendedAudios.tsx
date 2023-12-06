@@ -35,7 +35,7 @@ const RecommendedAudios: FC<Props> = ({onAudioLongPress, onAudioPress}) => {
       </PulseAnimationContainer>
     );
 
-    if(!data?.length) return null;
+  if (!data.length) return null;
 
   return (
     <View>

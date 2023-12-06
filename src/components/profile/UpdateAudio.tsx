@@ -52,7 +52,6 @@ const UpdateAudio: FC<Props> = props => {
       });
 
       queryClient.invalidateQueries({queryKey: ['uploads-by-profile']});
-      queryClient.removeQueries({queryKey: ['uploads-by-profile']})
       navigate('Profile');
     } catch (error) {
       const errorMessage = catchAsyncError(error);

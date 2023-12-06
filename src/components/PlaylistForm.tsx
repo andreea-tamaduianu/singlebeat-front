@@ -58,7 +58,7 @@ const PlaylistForm: FC<Props> = ({visible, onSubmit, onRequestClose}) => {
         </Pressable>
 
         <Pressable onPress={handleSubmit} style={styles.submitBtn}>
-          <Text style = {styles.submitBtnText}>Create</Text>
+          <Text>Create</Text>
         </Pressable>
       </View>
     </BasicModalContainer>
@@ -95,11 +95,6 @@ const styles = StyleSheet.create({
     borderColor: colors.PRIMARY,
     borderRadius: 7,
   },
-
-  submitBtnText:{
-    color: colors.PRIMARY,
-
-  }
 });
 
 export default PlaylistForm;

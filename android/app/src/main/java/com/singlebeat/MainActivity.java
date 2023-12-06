@@ -15,7 +15,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "Single Beat";
+    return "singlebeat";
   }
 
   /**
@@ -34,9 +34,7 @@ public class MainActivity extends ReactActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    RNBootSplash.init(this, R.style.BootTheme); // ⬅️ initialize the splash screen
+    RNBootSplash.init(this);
     super.onCreate(null);
-    
   }
 }
-s

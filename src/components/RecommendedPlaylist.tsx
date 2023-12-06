@@ -11,7 +11,7 @@ interface Props {
 const RecommendedPlaylist: FC<Props> = ({onListPress}) => {
   const {data} = useFetchRecommendedPlaylist();
 
-  if(!data?.length) return null;
+  if (!data?.length) return null;
 
   return (
     <View>

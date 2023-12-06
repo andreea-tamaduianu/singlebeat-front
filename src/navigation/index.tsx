@@ -6,7 +6,6 @@ import {FC, useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import client from 'src/api/client';
-import BootSplash from 'react-native-bootsplash';
 import {
   getAuthState,
   updateBusyState,
@@ -15,6 +14,7 @@ import {
 } from 'src/store/auth';
 import AuthNavigator from './AuthNavigator';
 import TabNavigator from './TabNavigator';
+import RNBootSplash from "react-native-bootsplash";
 
 interface Props {}
 
@@ -59,11 +59,7 @@ const AppNavigator: FC<Props> = props => {
   }, []);
 
   return (
-    <NavigationContainer
-      onReady={() => {
-        BootSplash.hide();
-      }}
-      theme={AppTheme}>
+    <NavigationContainer theme={AppTheme} onReady={() => RNBootSplash.hide()}>
       {busy ? (
         <View
           style={{

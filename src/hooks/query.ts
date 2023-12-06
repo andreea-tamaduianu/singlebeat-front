@@ -92,9 +92,9 @@ export const useFetchFavorite = () => {
   });
 };
 
-export const fetchHistories = async (pageNo=0): Promise<History[]> => {
+const fetchHistories = async (): Promise<History[]> => {
   const client = await getClient();
-  const {data} = await client('/history?limit=15&pageNo='+pageNo);
+  const {data} = await client('/history');
   return data.histories;
 };
 
