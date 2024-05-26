@@ -15,7 +15,7 @@ const RecommendedPlaylist: FC<Props> = ({onListPress}) => {
 
   return (
     <View>
-      <Text style={styles.header}>Playlist for you</Text>
+      <Text style={styles.header}>Playlists for you</Text>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}

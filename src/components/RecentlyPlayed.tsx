@@ -44,7 +44,7 @@ const RecentlyPlayed: FC<Props> = props => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Recently Played</Text>
+      <Text style={styles.title}>Recently played</Text>
       <GridView
         data={data}
         renderItem={item => {

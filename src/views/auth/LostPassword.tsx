@@ -47,7 +47,9 @@ const LostPassword: FC<Props> = props => {
         ...values,
       });
 
-      console.log(data);
+      dispatch(
+        upldateNotification({message: 'Email was sent.', type: 'success'}),
+      );
     } catch (error) {
       const errorMessage = catchAsyncError(error);
       dispatch(upldateNotification({message: errorMessage, type: 'error'}));
@@ -62,8 +64,8 @@ const LostPassword: FC<Props> = props => {
       initialValues={initialValues}
       validationSchema={lostPasswordSchema}>
       <AuthFormContainer
-        heading="Forget Password!"
-        subHeading="Oops, did you forget your password? Don't worry, we'll help you get back in.">
+        heading="Forgot your password?"
+        subHeading="Don't worry, we'll help you get it back.">
         <View style={styles.formContainer}>
           <AuthInputField
             name="email"

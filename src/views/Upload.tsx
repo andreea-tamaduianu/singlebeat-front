@@ -1,9 +1,12 @@
 import AudioForm from '@components/form/AudioForm';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import colors from '@utils/colors';
 import {mapRange} from '@utils/math';
 import {FC, useState} from 'react';
 import {StyleSheet} from 'react-native';
+import { useQueryClient } from 'react-query';
 import {useDispatch} from 'react-redux';
+import { ProfileNavigatorStackParamList } from 'src/@types/navigation';
 import catchAsyncError from 'src/api/catchError';
 import {getClient} from 'src/api/client';
 import {upldateNotification} from 'src/store/notification';
@@ -13,7 +16,9 @@ interface Props {}
 const Upload: FC<Props> = props => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [busy, setBusy] = useState(false);
-
+  const {navigate} =
+    useNavigation<NavigationProp<ProfileNavigatorStackParamList>>();
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
 
   const handleUpload = async (formData: FormData) => {
@@ -39,7 +44,8 @@ const Upload: FC<Props> = props => {
         },
       });
 
-      console.log(data);
+      queryClient.invalidateQueries({queryKey: ['uploads-by-profile']});
+      navigate('Profile');
     } catch (error) {
       const errorMessage = catchAsyncError(error);
       dispatch(upldateNotification({message: errorMessage, type: 'error'}));

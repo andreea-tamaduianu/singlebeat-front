@@ -46,7 +46,7 @@ const PublicProfile: FC<Props> = ({route}) => {
             name="PublicPlaylist"
             component={PublicPlaylistTab}
             options={{
-              tabBarLabel: 'Playlist',
+              tabBarLabel: 'Playlists',
             }}
             initialParams={{profileId}}
           />

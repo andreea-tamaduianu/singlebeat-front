@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface singlebeatTests : XCTestCase
+@interface SingleBeatTests : XCTestCase
 
 @end
 
-@implementation singlebeatTests
+@implementation SingleBeatTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL (^)(UIView *view))test
 {

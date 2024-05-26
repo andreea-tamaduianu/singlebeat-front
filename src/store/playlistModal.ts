@@ -4,6 +4,8 @@ import {RootState} from '.';
 interface PlaylistModal {
   visible: boolean;
   selectedListId?: string;
+  isPrivate?: boolean;
+  allowPlaylistAudioRemove?: boolean;
 }
 
 const initialState: PlaylistModal = {
@@ -20,6 +22,15 @@ const slice = createSlice({
     updateSelectedListId(playerState, {payload}: PayloadAction<string>) {
       playerState.selectedListId = payload;
     },
+    updateIsPlaylistPrivate(playerState, {payload}: PayloadAction<boolean>) {
+      playerState.isPrivate = payload;
+    },
+    udpateAllowPlaylistAudioRemove(
+      playerState,
+      {payload}: PayloadAction<boolean>,
+    ) {
+      playerState.allowPlaylistAudioRemove = payload;
+    },
   },
 });
 
@@ -28,6 +39,11 @@ export const getPlaylistModalState = createSelector(
   modalState => modalState,
 );
 
-export const {updatePlaylistVisbility, updateSelectedListId} = slice.actions;
+export const {
+  updatePlaylistVisbility,
+  updateIsPlaylistPrivate,
+  updateSelectedListId,
+  udpateAllowPlaylistAudioRemove,
+} = slice.actions;
 
 export default slice.reducer;

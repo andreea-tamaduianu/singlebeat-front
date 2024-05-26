@@ -105,7 +105,7 @@ const Verification: FC<Props> = ({route}) => {
   }, [activeOtpIndex]);
 
   return (
-    <AuthFormContainer heading="Please look at your email.">
+    <AuthFormContainer heading="Please verify your email.">
       <View style={styles.inputContainer}>
         {otpFields.map((_, index) => {
           return (

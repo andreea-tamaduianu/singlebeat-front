@@ -112,6 +112,12 @@ const AudioForm: FC<Props> = ({
         });
 
       onSubmit(formData);
+      if (isForUpdate) {
+        dispatch(upldateNotification({message:'Audio was updated successfully.', type: 'success'}));
+      }
+      else {
+        dispatch(upldateNotification({message:'Audio was added successfully.', type: 'success'}));
+      }
     } catch (error) {
       const errorMessage = catchAsyncError(error);
       dispatch(upldateNotification({message: errorMessage, type: 'error'}));
@@ -139,7 +145,7 @@ const AudioForm: FC<Props> = ({
                 color={colors.SECONDARY}
               />
             }
-            btnTitle="Select Poster"
+            btnTitle="Select poster"
             options={{type: [types.images]}}
             onSelect={poster => {
               setAudioInfo({...audioInfo, poster});
@@ -154,7 +160,7 @@ const AudioForm: FC<Props> = ({
                   color={colors.SECONDARY}
                 />
               }
-              btnTitle="Select Audio"
+              btnTitle="Select audio"
               style={{marginLeft: 20}}
               options={{type: [types.audio]}}
               onSelect={file => {

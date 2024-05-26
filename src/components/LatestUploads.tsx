@@ -37,7 +37,7 @@ const LatestUploads: FC<Props> = ({onAudioLongPress, onAudioPress}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Latest Uploads</Text>
+      <Text style={styles.title}>Latest uploads</Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {data?.map(item => {
           return (

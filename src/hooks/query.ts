@@ -41,9 +41,9 @@ export const useFetchRecommendedAudios = () => {
   });
 };
 
-const fetchPlaylist = async (): Promise<Playlist[]> => {
+export const fetchPlaylist = async (pageNo = 0): Promise<Playlist[]> => {
   const client = await getClient();
-  const {data} = await client('/playlist/by-profile');
+  const {data} = await client('/playlist/by-profile?limit=10&pageNo=' + pageNo);
   return data.playlist;
 };
 
@@ -58,9 +58,9 @@ export const useFetchPlaylist = () => {
   });
 };
 
-const fetchUploadsByProfile = async (): Promise<AudioData[]> => {
+export const fetchUploadsByProfile = async (pageNo = 0): Promise<AudioData[]> => {
   const client = await getClient();
-  const {data} = await client('/profile/uploads');
+  const {data} = await client('/profile/uploads?pageNo=' + pageNo);
   return data.audios;
 };
 
@@ -75,9 +75,9 @@ export const useFetchUploadsByProfile = () => {
   });
 };
 
-const fetchFavorites = async (): Promise<AudioData[]> => {
+export const fetchFavorites = async (pageNo = 0): Promise<AudioData[]> => {
   const client = await getClient();
-  const {data} = await client('/favorite');
+  const {data} = await client('/favorite?pageNo=' + pageNo);
   return data.audios;
 };
 
@@ -92,9 +92,9 @@ export const useFetchFavorite = () => {
   });
 };
 
-const fetchHistories = async (): Promise<History[]> => {
+export const fetchHistories = async (pageNo = 0): Promise<History[]> => {
   const client = await getClient();
-  const {data} = await client('/history');
+  const {data} = await client('/history?limit=15&pageNo=' + pageNo);
   return data.histories;
 };
 
@@ -215,16 +215,22 @@ export const useFetchPublicPlaylist = (id: string) => {
   });
 };
 
-const fetchPlaylistAudios = async (id: string): Promise<CompletePlaylist> => {
+const fetchPlaylistAudios = async (
+  id: string,
+  isPrivate: boolean,
+): Promise<CompletePlaylist> => {
+  const endpoint = isPrivate
+    ? '/profile/private-playlist-audios/' + id
+    : '/profile/playlist-audios/' + id;
   const client = await getClient();
-  const {data} = await client('/profile/playlist-audios/' + id);
+  const {data} = await client(endpoint);
   return data.list;
 };
 
-export const useFetchPlaylistAudios = (id: string) => {
+export const useFetchPlaylistAudios = (id: string, isPrivate: boolean) => {
   const dispatch = useDispatch();
   return useQuery(['playlist-audios', id], {
-    queryFn: () => fetchPlaylistAudios(id),
+    queryFn: () => fetchPlaylistAudios(id, isPrivate),
     onError(err) {
       const errorMessage = catchAsyncError(err);
       dispatch(upldateNotification({message: errorMessage, type: 'error'}));

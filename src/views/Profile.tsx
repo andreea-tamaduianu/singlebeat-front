@@ -27,7 +27,7 @@ const Profile: FC<Props> = props => {
             tabBarLabelStyle: styles.tabBarLabelStyle,
           }}>
           <Tab.Screen name="Uploads" component={UploadsTab} />
-          <Tab.Screen name="Playlist" component={PlaylistTab} />
+          <Tab.Screen name="Playlists" component={PlaylistTab} />
           <Tab.Screen name="Favorites" component={FavoriteTab} />
           <Tab.Screen name="History" component={HistoryTab} />
         </Tab.Navigator>

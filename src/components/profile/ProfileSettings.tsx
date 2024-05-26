@@ -71,7 +71,7 @@ const ProfileSettings: FC<Props> = props => {
       if (!userInfo.name.trim())
         return dispatch(
           upldateNotification({
-            message: 'Profile name is require!',
+            message: 'Profile name is required!',
             type: 'error',
           }),
         );
@@ -91,7 +91,7 @@ const ProfileSettings: FC<Props> = props => {
       dispatch(updateProfile(data.profile));
       dispatch(
         upldateNotification({
-          message: 'Your profile is updated.',
+          message: 'Your profile was updated.',
           type: 'success',
         }),
       );
@@ -122,7 +122,7 @@ const ProfileSettings: FC<Props> = props => {
       const client = await getClient();
       dispatch(
         upldateNotification({
-          message: 'Your histories will be removed!',
+          message: 'Your history was deleted.',
           type: 'success',
         }),
       );
@@ -137,7 +137,7 @@ const ProfileSettings: FC<Props> = props => {
   const handleOnHistoryClear = () => {
     Alert.alert(
       'Are you sure?',
-      'This action will clear out all the hsitory!',
+      'This action will clear out all the history!',
       [
         {
           text: 'Clear',

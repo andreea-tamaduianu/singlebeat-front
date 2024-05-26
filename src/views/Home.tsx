@@ -44,6 +44,7 @@ const Home: FC<Props> = props => {
       const client = await getClient();
 
       const {data} = await client.post('/favorite?audioId=' + selectedAudio.id);
+      dispatch(upldateNotification({message: 'Audio was added to favorites.', type: 'success'}));
     } catch (error) {
       const errorMessage = catchAsyncError(error);
       dispatch(upldateNotification({message: errorMessage, type: 'error'}));
@@ -68,22 +69,25 @@ const Home: FC<Props> = props => {
 
     try {
       const client = await getClient();
-      const {data} = await client.post('/playlist/create', {
+      await client.post('/playlist/create', {
         resId: selectedAudio?.id,
         title: value.title,
         visibility: value.private ? 'private' : 'public',
       });
-      console.log(data);
+
+      dispatch(
+        upldateNotification({message: 'New playlist added.', type: 'success'}),
+      );
     } catch (error) {
       const errorMessage = catchAsyncError(error);
-      console.log(errorMessage);
+      dispatch(upldateNotification({message: errorMessage, type: 'error'}));
     }
   };
 
   const updatePlaylist = async (item: Playlist) => {
     try {
       const client = await getClient();
-      const {data} = await client.patch('/playlist', {
+      await client.patch('/playlist', {
         id: item.id,
         item: selectedAudio?.id,
         title: item.title,
@@ -97,7 +101,7 @@ const Home: FC<Props> = props => {
       );
     } catch (error) {
       const errorMessage = catchAsyncError(error);
-      console.log(errorMessage);
+      dispatch(upldateNotification({message: errorMessage, type: 'error'}));
     }
   };
 
@@ -142,7 +146,7 @@ const Home: FC<Props> = props => {
               onPress: handleOnAddToPlaylist,
             },
             {
-              title: 'Add to favorite',
+              title: 'Add to favorites',
               icon: 'cards-heart',
               onPress: handleOnFavPress,
             },

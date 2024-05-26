@@ -61,7 +61,7 @@ const PlayListModal: FC<Props> = ({
       {/* create playlist (new) button */}
       <ListItem
         icon={<AntDesign size={20} name="plus" color={colors.PRIMARY} />}
-        title="Create New"
+        title="Create new"
         onPress={onCreateNewPress}
       />
     </BasicModalContainer>

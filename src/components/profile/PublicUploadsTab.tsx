@@ -22,7 +22,7 @@ const PublicUploadsTab: FC<Props> = props => {
 
   if (isLoading) return <AudioListLoadingUI />;
 
-  if (!data?.length) return <EmptyRecords title="There is no audio!" />;
+  if (!data?.length) return <EmptyRecords title="There are no audios." />;
 
   return (
     <ScrollView style={styles.container}>

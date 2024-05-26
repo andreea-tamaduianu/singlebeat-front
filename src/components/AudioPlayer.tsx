@@ -37,7 +37,7 @@ const AudioPlayer: FC<Props> = ({
   onRequestClose,
   onProfileLinkPress,
 }) => {
-  const [showAudioInfo, setShowAudioInfo] = useState(false);
+  const [showAudioInfo, setShowAudioInfo] = useState(true);
   const {onGoingAudio, playbackRate} = useSelector(getPlayerState);
   const {
     isPalying,
@@ -85,10 +85,7 @@ const AudioPlayer: FC<Props> = ({
           style={styles.infoBtn}>
           <AntDesign name="infocirlceo" color={colors.CONTRAST} size={24} />
         </Pressable>
-        <AudioInfoContainer
-          visible={showAudioInfo}
-          closeHandler={setShowAudioInfo}
-        />
+        <AudioInfoContainer visible={showAudioInfo} closeHandler={setShowAudioInfo}/>
         <Image source={source} style={styles.poster} />
         <View style={styles.contentContainer}>
           <Text style={styles.title}>{onGoingAudio?.title}</Text>
@@ -185,6 +182,7 @@ const AudioPlayer: FC<Props> = ({
             </PlayerControler>
           </View>
         </View>
+       
       </View>
     </AppModal>
   );

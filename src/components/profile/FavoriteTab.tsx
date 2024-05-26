@@ -1,44 +1,66 @@
 import AudioListItem from '@ui/AudioListItem';
 import AudioListLoadingUI from '@ui/AudioListLoadingUI';
 import EmptyRecords from '@ui/EmptyRecords';
-import colors from '@utils/colors';
-import {FC} from 'react';
-import {View, StyleSheet, Text, ScrollView} from 'react-native';
-import {RefreshControl} from 'react-native-gesture-handler';
+import PaginatedList from '@ui/PaginatedList';
+import {FC, useState} from 'react';
+import {StyleSheet} from 'react-native';
 import {useQueryClient} from 'react-query';
-import {useSelector} from 'react-redux';
-import {useFetchFavorite} from 'src/hooks/query';
+import {useDispatch, useSelector} from 'react-redux';
+import catchAsyncError from 'src/api/catchError';
+import {fetchFavorites, useFetchFavorite} from 'src/hooks/query';
 import useAudioController from 'src/hooks/useAudioController';
+import {upldateNotification} from 'src/store/notification';
 import {getPlayerState} from 'src/store/player';
 
 interface Props {}
-
+let pageNo = 0;
 const FavoriteTab: FC<Props> = props => {
   const {onGoingAudio} = useSelector(getPlayerState);
   const {onAudioPress} = useAudioController();
-  const {data, isLoading, isFetching} = useFetchFavorite();
+  const {data = [], isLoading, isFetching} = useFetchFavorite();
+  const [hasMore, setHasMore] = useState(true);
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
   const queryClient = useQueryClient();
 
-  const handleOnRefresh = () => {
-    queryClient.invalidateQueries({queryKey: ['favorite']});
-  };
+  const dispatch = useDispatch();
 
   if (isLoading) return <AudioListLoadingUI />;
 
-  return (
-    <ScrollView
-      refreshControl={
-        <RefreshControl
-          refreshing={isFetching}
-          onRefresh={handleOnRefresh}
-          tintColor={colors.CONTRAST}
-        />
+  const handleOnEndReached = async () => {
+    setIsFetchingMore(true);
+    try {
+      if (!data) return;
+      pageNo += 1;
+      const audios = await fetchFavorites(pageNo);
+      if (!audios || !audios.length) {
+        setHasMore(false);
       }
-      style={styles.container}>
-      {!data?.length ? (
-        <EmptyRecords title="There is no favorite audio!" />
-      ) : null}
-      {data?.map(item => {
+
+      const newList = [...data, ...audios];
+      queryClient.setQueryData(['favorite'], newList);
+    } catch (error) {
+      const errorMessage = catchAsyncError(error);
+      dispatch(upldateNotification({message: errorMessage, type: 'error'}));
+    }
+    setIsFetchingMore(false);
+  };
+
+  const handleOnRefresh = () => {
+    pageNo = 0;
+    setHasMore(true);
+    queryClient.invalidateQueries(['favorite']);
+  };
+
+  return (
+    <PaginatedList
+      data={data}
+      hasMore={hasMore}
+      isFetching={isFetchingMore}
+      onEndReached={handleOnEndReached}
+      onRefresh={handleOnRefresh}
+      refreshing={isFetching}
+      ListEmptyComponent={<EmptyRecords title="There are no favorite audios." />}
+      renderItem={({item}) => {
         return (
           <AudioListItem
             onPress={() => onAudioPress(item, data)}
@@ -47,8 +69,8 @@ const FavoriteTab: FC<Props> = props => {
             isPlaying={onGoingAudio?.id === item.id}
           />
         );
-      })}
-    </ScrollView>
+      }}
+    />
   );
 };
 

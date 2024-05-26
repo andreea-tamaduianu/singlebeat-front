@@ -103,7 +103,7 @@ const SignIn: FC<Props> = props => {
 
           <View style={styles.linkContainer}>
             <AppLink
-              title="I Lost My Password"
+              title="Forgot your password?"
               onPress={() => {
                 navigation.navigate('LostPassword');
               }}
